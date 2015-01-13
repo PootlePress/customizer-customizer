@@ -7,12 +7,12 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly.
  * Re-usable class for registering post type taxonomies.
  *
  * @package WordPress
- * @subpackage Starter_Plugin
+ * @subpackage PP_Customizer_Customizer
  * @category Plugin
  * @author Matty
  * @since 1.0.0
  */
-class Starter_Plugin_Taxonomy {
+class PP_Customizer_Customizer_Taxonomy {
 	/**
 	 * The post type to register the taxonomy for.
 	 * @access  private
@@ -69,8 +69,8 @@ class Starter_Plugin_Taxonomy {
 		$this->singular = esc_html( $singular );
 		$this->plural = esc_html( $plural );
 
-		if ( '' == $this->singular ) $this->singular = __( 'Category', 'starter-plugin' );
-		if ( '' == $this->plural ) $this->plural = __( 'Categories', 'starter-plugin' );
+		if ( '' == $this->singular ) $this->singular = __( 'Category', 'pp-customizer-customizer' );
+		if ( '' == $this->plural ) $this->plural = __( 'Categories', 'pp-customizer-customizer' );
 
 		$this->args = wp_parse_args( $args, $this->_get_default_args() );
 	} // End __construct()
@@ -93,17 +93,17 @@ class Starter_Plugin_Taxonomy {
 	 */
 	private function _get_default_labels () {
 		return array(
-			    'name'                => sprintf( _x( '%s', 'taxonomy general name', 'starter-plugin' ), $this->plural ),
-			    'singular_name'       => sprintf( _x( '%s', 'taxonomy singular name', 'starter-plugin' ), $this->singular ),
-			    'search_items'        => sprintf( __( 'Search %s', 'starter-plugin' ), $this->plural ),
-			    'all_items'           => sprintf( __( 'All %s', 'starter-plugin' ), $this->plural ),
-			    'parent_item'         => sprintf( __( 'Parent %s', 'starter-plugin' ), $this->singular ),
-			    'parent_item_colon'   => sprintf( __( 'Parent %s:', 'starter-plugin' ), $this->singular ),
-			    'edit_item'           => sprintf( __( 'Edit %s', 'starter-plugin' ), $this->singular ),
-			    'update_item'         => sprintf( __( 'Update %s', 'starter-plugin' ), $this->singular ),
-			    'add_new_item'        => sprintf( __( 'Add New %s', 'starter-plugin' ), $this->singular ),
-			    'new_item_name'       => sprintf( __( 'New %s Name', 'starter-plugin' ), $this->singular ),
-			    'menu_name'           => sprintf( __( '%s', 'starter-plugin' ), $this->plural )
+			    'name'                => sprintf( _x( '%s', 'taxonomy general name', 'pp-customizer-customizer' ), $this->plural ),
+			    'singular_name'       => sprintf( _x( '%s', 'taxonomy singular name', 'pp-customizer-customizer' ), $this->singular ),
+			    'search_items'        => sprintf( __( 'Search %s', 'pp-customizer-customizer' ), $this->plural ),
+			    'all_items'           => sprintf( __( 'All %s', 'pp-customizer-customizer' ), $this->plural ),
+			    'parent_item'         => sprintf( __( 'Parent %s', 'pp-customizer-customizer' ), $this->singular ),
+			    'parent_item_colon'   => sprintf( __( 'Parent %s:', 'pp-customizer-customizer' ), $this->singular ),
+			    'edit_item'           => sprintf( __( 'Edit %s', 'pp-customizer-customizer' ), $this->singular ),
+			    'update_item'         => sprintf( __( 'Update %s', 'pp-customizer-customizer' ), $this->singular ),
+			    'add_new_item'        => sprintf( __( 'Add New %s', 'pp-customizer-customizer' ), $this->singular ),
+			    'new_item_name'       => sprintf( __( 'New %s Name', 'pp-customizer-customizer' ), $this->singular ),
+			    'menu_name'           => sprintf( __( '%s', 'pp-customizer-customizer' ), $this->plural )
 			  );
 	} // End _get_default_labels()
 

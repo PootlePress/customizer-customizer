@@ -8,7 +8,7 @@
  * Requires at least: 4.0.0
  * Tested up to: 4.0.0
  *
- * Text Domain: starter-plugin
+ * Text Domain: pp-customizer-customizer
  * Domain Path: /languages/
  *
  */
@@ -16,29 +16,29 @@
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 /**
- * Returns the main instance of Starter_Plugin to prevent the need to use globals.
+ * Returns the main instance of PP_Customizer_Customizer to prevent the need to use globals.
  *
  * @since  1.0.0
- * @return object Starter_Plugin
+ * @return object PP_Customizer_Customizer
  */
-function Starter_Plugin() {
-	return Starter_Plugin::instance();
-} // End Starter_Plugin()
+function PP_Customizer_Customizer() {
+	return PP_Customizer_Customizer::instance();
+} // End PP_Customizer_Customizer()
 
-Starter_Plugin();
+PP_Customizer_Customizer();
 
 /**
- * Main Starter_Plugin Class
+ * Main PP_Customizer_Customizer Class
  *
- * @class Starter_Plugin
+ * @class PP_Customizer_Customizer
  * @version	1.0.0
  * @since 1.0.0
- * @package	Starter_Plugin
+ * @package	PP_Customizer_Customizer
  * @author Matty
  */
-final class Starter_Plugin {
+final class PP_Customizer_Customizer {
 	/**
-	 * Starter_Plugin The single instance of Starter_Plugin.
+	 * PP_Customizer_Customizer The single instance of PP_Customizer_Customizer.
 	 * @var 	object
 	 * @access  private
 	 * @since 	1.0.0
@@ -111,27 +111,21 @@ final class Starter_Plugin {
 	 * @return  void
 	 */
 	public function __construct () {
-		$this->token 			= 'starter-plugin';
+		$this->token 			= 'pp-customizer-customizer';
 		$this->plugin_url 		= plugin_dir_url( __FILE__ );
 		$this->plugin_path 		= plugin_dir_path( __FILE__ );
 		$this->version 			= '1.0.0';
 
 		// Admin - Start
-		require_once( 'classes/class-starter-plugin-settings.php' );
-			$this->settings = Starter_Plugin_Settings::instance();
+		require_once( 'classes/class-pp-customizer-customizer-settings.php' );
+			$this->settings = PP_Customizer_Customizer_Settings::instance();
 
 		if ( is_admin() ) {
-			require_once( 'classes/class-starter-plugin-admin.php' );
-			$this->admin = Starter_Plugin_Admin::instance();
+			require_once( 'classes/class-pp-customizer-customizer-admin.php' );
+			$this->admin = PP_Customizer_Customizer_Admin::instance();
 		}
-		// Admin - End
 
-		// Post Types - Start
-		require_once( 'classes/class-starter-plugin-post-type.php' );
-		require_once( 'classes/class-starter-plugin-taxonomy.php' );
 
-		// Register an example post type. To register other post types, duplicate this line.
-		$this->post_types['thing'] = new Starter_Plugin_Post_Type( 'thing', __( 'Thing', 'starter-plugin' ), __( 'Things', 'starter-plugin' ), array( 'menu_icon' => 'dashicons-carrot' ) );
 		// Post Types - End
 		register_activation_hook( __FILE__, array( $this, 'install' ) );
 
@@ -139,14 +133,14 @@ final class Starter_Plugin {
 	} // End __construct()
 
 	/**
-	 * Main Starter_Plugin Instance
+	 * Main PP_Customizer_Customizer Instance
 	 *
-	 * Ensures only one instance of Starter_Plugin is loaded or can be loaded.
+	 * Ensures only one instance of PP_Customizer_Customizer is loaded or can be loaded.
 	 *
 	 * @since 1.0.0
 	 * @static
-	 * @see Starter_Plugin()
-	 * @return Main Starter_Plugin instance
+	 * @see PP_Customizer_Customizer()
+	 * @return Main PP_Customizer_Customizer instance
 	 */
 	public static function instance () {
 		if ( is_null( self::$_instance ) )
@@ -161,7 +155,7 @@ final class Starter_Plugin {
 	 * @return  void
 	 */
 	public function load_plugin_textdomain() {
-		load_plugin_textdomain( 'starter-plugin', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+		load_plugin_textdomain( 'pp-customizer-customizer', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 	} // End load_plugin_textdomain()
 
 	/**

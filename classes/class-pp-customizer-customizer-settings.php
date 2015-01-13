@@ -2,17 +2,17 @@
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 /**
- * Starter_Plugin_Settings Class
+ * PP_Customizer_Customizer_Settings Class
  *
- * @class Starter_Plugin_Settings
+ * @class PP_Customizer_Customizer_Settings
  * @version	1.0.0
  * @since 1.0.0
- * @package	Starter_Plugin
+ * @package	PP_Customizer_Customizer
  * @author Jeffikus
  */
-final class Starter_Plugin_Settings {
+final class PP_Customizer_Customizer_Settings {
 	/**
-	 * Starter_Plugin_Admin The single instance of Starter_Plugin_Admin.
+	 * PP_Customizer_Customizer_Admin The single instance of PP_Customizer_Customizer_Admin.
 	 * @var 	object
 	 * @access  private
 	 * @since 	1.0.0
@@ -27,14 +27,16 @@ final class Starter_Plugin_Settings {
 	 */
 	private $_has_select;
 
+	public $customizeManager = null;
+
 	/**
-	 * Main Starter_Plugin_Settings Instance
+	 * Main PP_Customizer_Customizer_Settings Instance
 	 *
-	 * Ensures only one instance of Starter_Plugin_Settings is loaded or can be loaded.
+	 * Ensures only one instance of PP_Customizer_Customizer_Settings is loaded or can be loaded.
 	 *
 	 * @since 1.0.0
 	 * @static
-	 * @return Main Starter_Plugin_Settings instance
+	 * @return Main PP_Customizer_Customizer_Settings instance
 	 */
 	public static function instance () {
 		if ( is_null( self::$_instance ) )
@@ -60,8 +62,18 @@ final class Starter_Plugin_Settings {
 	 * @return  array        Validated data.
 	 */
 	public function validate_settings ( $input, $section ) {
+
+		$fields = $this->get_settings_fields( $section );
+
+		// if checkbox is unchecked,
+		// the setting will be missing in $input
+		foreach ($fields as $fieldID => $field) {
+			if (!isset($input[$fieldID])) {
+				$input[$fieldID] = 'false';
+			}
+		}
+
 		if ( is_array( $input ) && 0 < count( $input ) ) {
-			$fields = $this->get_settings_fields( $section );
 
 			foreach ( $input as $k => $v ) {
 				if ( ! isset( $fields[$k] ) ) {
@@ -72,7 +84,7 @@ final class Starter_Plugin_Settings {
 				$method = 'validate_field_' . $fields[$k]['type'];
 
 				if ( ! method_exists( $this, $method ) ) {
-					if ( true == (bool)apply_filters( 'starter-plugin-validate-field-' . $fields[$k]['type'] . '_use_default', true ) ) {
+					if ( true == (bool)apply_filters( 'pp-customizer-customizer-validate-field-' . $fields[$k]['type'] . '_use_default', true ) ) {
 						$method = 'validate_field_text';
 					} else {
 						$method = '';
@@ -81,10 +93,10 @@ final class Starter_Plugin_Settings {
 
 				// If we have an internal method for validation, filter and apply it.
 				if ( '' != $method ) {
-					add_filter( 'starter-plugin-validate-field-' . $fields[$k]['type'], array( $this, $method ) );
+					add_filter( 'pp-customizer-customizer-validate-field-' . $fields[$k]['type'], array( $this, $method ) );
 				}
 
-				$method_output = apply_filters( 'starter-plugin-validate-field-' . $fields[$k]['type'], $v, $fields[$k] );
+				$method_output = apply_filters( 'pp-customizer-customizer-validate-field-' . $fields[$k]['type'], $v, $fields[$k] );
 
 				if ( is_wp_error( $method_output ) ) {
 					// if ( defined( 'WP_DEBUG' ) || true == constant( 'WP_DEBUG' ) ) print_r( $method_output ); // Add better error display.
@@ -92,7 +104,9 @@ final class Starter_Plugin_Settings {
 					$input[$k] = $method_output;
 				}
 			}
+
 		}
+
 		return $input;
 	} // End validate_settings()
 
@@ -192,7 +206,7 @@ final class Starter_Plugin_Settings {
 		}
 
 		// Construct the key.
-		$key 				= Starter_Plugin()->token . '-' . $args['section'] . '[' . $args['id'] . ']';
+		$key 				= PP_Customizer_Customizer()->token . '-' . $args['section'] . '[' . $args['id'] . ']';
 		$method_output 		= $this->$method( $key, $args );
 
 		if ( is_wp_error( $method_output ) ) {
@@ -224,13 +238,16 @@ final class Starter_Plugin_Settings {
 	public function get_settings_sections () {
 		$settings_sections = array();
 
-		$settings_sections['standard-fields'] = __( 'Standard Fields', 'starter-plugin' );
-		$settings_sections['special-fields'] = __( 'Special Fields', 'starter-plugin' );
+//		$settings_sections['standard-fields'] = __( 'Standard Fields', 'pp-customizer-customizer' );
+//		$settings_sections['special-fields'] = __( 'Special Fields', 'pp-customizer-customizer' );
+
+		$settings_sections['pp-cc-fields'] = 'All Sections';
+
 		// Add your new sections below here.
 		// Admin tabs will be created for each section.
 		// Don't forget to add fields for the section in the get_settings_fields() function below
 
-		return (array)apply_filters( 'starter-plugin-settings-sections', $settings_sections );
+		return (array)apply_filters( 'pp-customizer-customizer-settings-sections', $settings_sections );
 	} // End get_settings_sections()
 
 	/**
@@ -245,63 +262,99 @@ final class Starter_Plugin_Settings {
 		// Declare the default settings fields.
 
 		switch ( $section ) {
+			case 'pp-cc-fields':
+
+				if ($this->customizeManager != null) {
+					$customizeManager = $this->customizeManager;
+				} else if (isset($GLOBALS['wp_customize'])) {
+					$customizeManager = $GLOBALS['wp_customize'];
+				} else if (!class_exists('WP_Customize_Manager')) {
+					require_once( ABSPATH . WPINC . '/class-wp-customize-manager.php' );
+
+					// Init Customize class
+					$customizeManager = new WP_Customize_Manager;
+
+					// this is to initialize some data fields using this method
+					$customizeManager->setup_theme();
+
+				} else {
+					$customizeManager = new WP_Customize_Manager;
+
+					// this is to initialize some data fields using this method
+					$customizeManager->setup_theme();
+				}
+
+				remove_action('customize_register', array(PP_Customizer_Customizer_Admin::instance(), 'customize_register'), 100);
+				do_action('customize_register', $customizeManager);
+				add_action('customize_register', array(PP_Customizer_Customizer_Admin::instance(), 'customize_register'), 100);
+
+				foreach ($customizeManager->sections() as $key => $section) {
+					$settings_fields[$key] = array(
+						'name' => $section->title,
+						'type' => 'checkbox',
+						'default' => 'true',
+						'section' => 'pp-cc-fields',
+						'description' => 'Enabled'
+					);
+				}
+				break;
 			case 'standard-fields':
 
 				$settings_fields['text'] = array(
-												'name' => __( 'Example Text Input', 'starter-plugin' ),
+												'name' => __( 'Example Text Input', 'pp-customizer-customizer' ),
 												'type' => 'text',
 												'default' => '',
 												'section' => 'standard-fields',
-												'description' => __( 'Place the field description text here.', 'starter-plugin' )
+												'description' => __( 'Place the field description text here.', 'pp-customizer-customizer' )
 											);
 				$settings_fields['textarea'] = array(
-												'name' => __( 'Example Textarea', 'starter-plugin' ),
+												'name' => __( 'Example Textarea', 'pp-customizer-customizer' ),
 												'type' => 'textarea',
 												'default' => '',
 												'section' => 'standard-fields',
-												'description' => __( 'Place the field description text here.', 'starter-plugin' )
+												'description' => __( 'Place the field description text here.', 'pp-customizer-customizer' )
 											);
 				$settings_fields['checkbox'] = array(
-												'name' => __( 'Example Checkbox', 'starter-plugin' ),
+												'name' => __( 'Example Checkbox', 'pp-customizer-customizer' ),
 												'type' => 'checkbox',
 												'default' => '',
 												'section' => 'standard-fields',
-												'description' => __( 'Place the field description text here.', 'starter-plugin' )
+												'description' => __( 'Place the field description text here.', 'pp-customizer-customizer' )
 											);
 				$settings_fields['radio'] = array(
-												'name' => __( 'Example Radio Buttons', 'starter-plugin' ),
+												'name' => __( 'Example Radio Buttons', 'pp-customizer-customizer' ),
 												'type' => 'radio',
 												'default' => '',
 												'section' => 'standard-fields',
 												'options' => array(
-																	'one' => __( 'One', 'starter-plugin' ),
-																	'two' => __( 'Two', 'starter-plugin' ),
-																	'three' => __( 'Three', 'starter-plugin' )
+																	'one' => __( 'One', 'pp-customizer-customizer' ),
+																	'two' => __( 'Two', 'pp-customizer-customizer' ),
+																	'three' => __( 'Three', 'pp-customizer-customizer' )
 															),
-												'description' => __( 'Place the field description text here.', 'starter-plugin' )
+												'description' => __( 'Place the field description text here.', 'pp-customizer-customizer' )
 											);
 				$settings_fields['select'] = array(
-													'name' => __( 'Example Select', 'starter-plugin' ),
+													'name' => __( 'Example Select', 'pp-customizer-customizer' ),
 													'type' => 'select',
 													'default' => '',
 													'section' => 'standard-fields',
 													'options' => array(
-																	'one' => __( 'One', 'starter-plugin' ),
-																	'two' => __( 'Two', 'starter-plugin' ),
-																	'three' => __( 'Three', 'starter-plugin' )
+																	'one' => __( 'One', 'pp-customizer-customizer' ),
+																	'two' => __( 'Two', 'pp-customizer-customizer' ),
+																	'three' => __( 'Three', 'pp-customizer-customizer' )
 																),
-													'description' => __( 'Place the field description text here.', 'starter-plugin' )
+													'description' => __( 'Place the field description text here.', 'pp-customizer-customizer' )
 											);
 
 				break;
 			case 'special-fields':
 
 				$settings_fields['select_taxonomy'] = array(
-													'name' => __( 'Example Taxonomy Selector', 'starter-plugin' ),
+													'name' => __( 'Example Taxonomy Selector', 'pp-customizer-customizer' ),
 													'type' => 'select_taxonomy',
 													'default' => '',
 													'section' => 'special-fields',
-													'description' => __( 'Place the field description text here.', 'starter-plugin' )
+													'description' => __( 'Place the field description text here.', 'pp-customizer-customizer' )
 											);
 
 				break;
@@ -310,7 +363,7 @@ final class Starter_Plugin_Settings {
 				break;
 		}
 
-		return (array)apply_filters( 'starter-plugin-settings-fields', $settings_fields );
+		return (array)apply_filters( 'pp-customizer-customizer-settings-fields', $settings_fields );
 	} // End get_settings_fields()
 
 	/**
@@ -475,7 +528,7 @@ final class Starter_Plugin_Settings {
 	 * @return  array Supported field type keys.
 	 */
 	public function get_supported_fields () {
-		return (array)apply_filters( 'starter-plugin-supported-fields', array( 'text', 'checkbox', 'radio', 'textarea', 'select', 'select_taxonomy' ) );
+		return (array)apply_filters( 'pp-customizer-customizer-supported-fields', array( 'text', 'checkbox', 'radio', 'textarea', 'select', 'select_taxonomy' ) );
 	} // End get_supported_fields()
 
 	/**
@@ -488,7 +541,7 @@ final class Starter_Plugin_Settings {
 	 * @return  mixed Returned value.
 	 */
 	public function get_value ( $key, $default, $section ) {
-		$values = get_option( 'starter-plugin-' . $section, array() );
+		$values = get_option( 'pp-customizer-customizer-' . $section, array() );
 
 		if ( is_array( $values ) && isset( $values[$key] ) ) {
 			$response = $values[$key];
@@ -518,7 +571,7 @@ final class Starter_Plugin_Settings {
 		if ( 0 < count( $sections ) ) {
 			foreach ( $sections as $k => $v ) {
 				$fields = $this->get_settings_fields( $v );
-				$values = get_option( 'starter-plugin-' . $v, array() );
+				$values = get_option( 'pp-customizer-customizer-' . $v, array() );
 
 				if ( is_array( $fields ) && 0 < count( $fields ) ) {
 					foreach ( $fields as $i => $j ) {

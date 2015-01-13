@@ -7,12 +7,12 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly.
  * All functionality pertaining to post types in Starter Plugin.
  *
  * @package WordPress
- * @subpackage Starter_Plugin
+ * @subpackage PP_Customizer_Customizer
  * @category Plugin
  * @author Matty
  * @since 1.0.0
  */
-class Starter_Plugin_Post_Type {
+class PP_Customizer_Customizer_Post_Type {
 	/**
 	 * The post type token.
 	 * @access public
@@ -96,23 +96,23 @@ class Starter_Plugin_Post_Type {
 	 */
 	public function register_post_type () {
 		$labels = array(
-			'name' => sprintf( _x( '%s', 'post type general name', 'starter-plugin' ), $this->plural ),
-			'singular_name' => sprintf( _x( '%s', 'post type singular name', 'starter-plugin' ), $this->singular ),
-			'add_new' => _x( 'Add New', $this->post_type, 'starter-plugin' ),
-			'add_new_item' => sprintf( __( 'Add New %s', 'starter-plugin' ), $this->singular ),
-			'edit_item' => sprintf( __( 'Edit %s', 'starter-plugin' ), $this->singular ),
-			'new_item' => sprintf( __( 'New %s', 'starter-plugin' ), $this->singular ),
-			'all_items' => sprintf( __( 'All %s', 'starter-plugin' ), $this->plural ),
-			'view_item' => sprintf( __( 'View %s', 'starter-plugin' ), $this->singular ),
-			'search_items' => sprintf( __( 'Search %a', 'starter-plugin' ), $this->plural ),
-			'not_found' => sprintf( __( 'No %s Found', 'starter-plugin' ), $this->plural ),
-			'not_found_in_trash' => sprintf( __( 'No %s Found In Trash', 'starter-plugin' ), $this->plural ),
+			'name' => sprintf( _x( '%s', 'post type general name', 'pp-customizer-customizer' ), $this->plural ),
+			'singular_name' => sprintf( _x( '%s', 'post type singular name', 'pp-customizer-customizer' ), $this->singular ),
+			'add_new' => _x( 'Add New', $this->post_type, 'pp-customizer-customizer' ),
+			'add_new_item' => sprintf( __( 'Add New %s', 'pp-customizer-customizer' ), $this->singular ),
+			'edit_item' => sprintf( __( 'Edit %s', 'pp-customizer-customizer' ), $this->singular ),
+			'new_item' => sprintf( __( 'New %s', 'pp-customizer-customizer' ), $this->singular ),
+			'all_items' => sprintf( __( 'All %s', 'pp-customizer-customizer' ), $this->plural ),
+			'view_item' => sprintf( __( 'View %s', 'pp-customizer-customizer' ), $this->singular ),
+			'search_items' => sprintf( __( 'Search %a', 'pp-customizer-customizer' ), $this->plural ),
+			'not_found' => sprintf( __( 'No %s Found', 'pp-customizer-customizer' ), $this->plural ),
+			'not_found_in_trash' => sprintf( __( 'No %s Found In Trash', 'pp-customizer-customizer' ), $this->plural ),
 			'parent_item_colon' => '',
 			'menu_name' => $this->plural,
 		);
 
-		$single_slug = apply_filters( 'starter-plugin_single_slug', _x( sanitize_title_with_dashes( $this->singular ), 'single post url slug', 'starter-plugin' ) );
-		$archive_slug = apply_filters( 'starter-plugin_archive_slug', _x( sanitize_title_with_dashes( $this->plural ), 'post archive url slug', 'starter-plugin' ) );
+		$single_slug = apply_filters( 'pp-customizer-customizer_single_slug', _x( sanitize_title_with_dashes( $this->singular ), 'single post url slug', 'pp-customizer-customizer' ) );
+		$archive_slug = apply_filters( 'pp-customizer-customizer_archive_slug', _x( sanitize_title_with_dashes( $this->plural ), 'post archive url slug', 'pp-customizer-customizer' ) );
 
 		$defaults = array(
 			'labels' => $labels,
@@ -142,7 +142,7 @@ class Starter_Plugin_Post_Type {
 	 * @return void
 	 */
 	public function register_taxonomy () {
-		$this->taxonomies['thing-category'] = new Starter_Plugin_Taxonomy(); // Leave arguments empty, to use the default arguments.
+		$this->taxonomies['thing-category'] = new PP_Customizer_Customizer_Taxonomy(); // Leave arguments empty, to use the default arguments.
 		$this->taxonomies['thing-category']->register();
 	} // End register_taxonomy()
 
@@ -180,7 +180,7 @@ class Starter_Plugin_Post_Type {
 	 * @return void
 	 */
 	public function register_custom_column_headings ( $defaults ) {
-		$new_columns = array( 'image' => __( 'Image', 'starter-plugin' ) );
+		$new_columns = array( 'image' => __( 'Image', 'pp-customizer-customizer' ) );
 
 		$last_item = array();
 
@@ -214,19 +214,19 @@ class Starter_Plugin_Post_Type {
 
 		$messages[$this->post_type] = array(
 			0 => '', // Unused. Messages start at index 1.
-			1 => sprintf( __( '%3$s updated. %sView %4$s%s', 'starter-plugin' ), '<a href="' . esc_url( get_permalink( $post_ID ) ) . '">', '</a>', $this->singular, strtolower( $this->singular ) ),
-			2 => __( 'Custom field updated.', 'starter-plugin' ),
-			3 => __( 'Custom field deleted.', 'starter-plugin' ),
-			4 => sprintf( __( '%s updated.', 'starter-plugin' ), $this->singular ),
+			1 => sprintf( __( '%3$s updated. %sView %4$s%s', 'pp-customizer-customizer' ), '<a href="' . esc_url( get_permalink( $post_ID ) ) . '">', '</a>', $this->singular, strtolower( $this->singular ) ),
+			2 => __( 'Custom field updated.', 'pp-customizer-customizer' ),
+			3 => __( 'Custom field deleted.', 'pp-customizer-customizer' ),
+			4 => sprintf( __( '%s updated.', 'pp-customizer-customizer' ), $this->singular ),
 			/* translators: %s: date and time of the revision */
-			5 => isset($_GET['revision']) ? sprintf( __( '%s restored to revision from %s', 'starter-plugin' ), $this->singular, wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
-			6 => sprintf( __( '%1$s published. %3$sView %2$s%4$s', 'starter-plugin' ), $this->singular, strtolower( $this->singular ), '<a href="' . esc_url( get_permalink( $post_ID ) ) . '">', '</a>' ),
-			7 => sprintf( __( '%s saved.', 'starter-plugin' ), $this->singular ),
-			8 => sprintf( __( '%s submitted. %sPreview %s%s', 'starter-plugin' ), $this->singular, strtolower( $this->singular ), '<a target="_blank" href="' . esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) . '">', '</a>' ),
-			9 => sprintf( __( '%s scheduled for: %1$s. %2$sPreview %s%3$s', 'starter-plugin' ), $this->singular, strtolower( $this->singular ),
+			5 => isset($_GET['revision']) ? sprintf( __( '%s restored to revision from %s', 'pp-customizer-customizer' ), $this->singular, wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+			6 => sprintf( __( '%1$s published. %3$sView %2$s%4$s', 'pp-customizer-customizer' ), $this->singular, strtolower( $this->singular ), '<a href="' . esc_url( get_permalink( $post_ID ) ) . '">', '</a>' ),
+			7 => sprintf( __( '%s saved.', 'pp-customizer-customizer' ), $this->singular ),
+			8 => sprintf( __( '%s submitted. %sPreview %s%s', 'pp-customizer-customizer' ), $this->singular, strtolower( $this->singular ), '<a target="_blank" href="' . esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) . '">', '</a>' ),
+			9 => sprintf( __( '%s scheduled for: %1$s. %2$sPreview %s%3$s', 'pp-customizer-customizer' ), $this->singular, strtolower( $this->singular ),
 			// translators: Publish box date format, see http://php.net/date
 			'<strong>' . date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ) . '</strong>', '<a target="_blank" href="' . esc_url( get_permalink($post_ID) ) . '">', '</a>' ),
-			10 => sprintf( __( '%s draft updated. %sPreview %s%s', 'starter-plugin' ), $this->singular, strtolower( $this->singular ), '<a target="_blank" href="' . esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) . '">', '</a>' ),
+			10 => sprintf( __( '%s draft updated. %sPreview %s%s', 'pp-customizer-customizer' ), $this->singular, strtolower( $this->singular ), '<a target="_blank" href="' . esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) . '">', '</a>' ),
 		);
 
 		return $messages;
@@ -240,7 +240,7 @@ class Starter_Plugin_Post_Type {
 	 * @return void
 	 */
 	public function meta_box_setup () {
-		add_meta_box( $this->post_type . '-data', __( 'Thing Details', 'starter-plugin' ), array( $this, 'meta_box_content' ), $this->post_type, 'normal', 'high' );
+		add_meta_box( $this->post_type . '-data', __( 'Thing Details', 'pp-customizer-customizer' ), array( $this, 'meta_box_content' ), $this->post_type, 'normal', 'high' );
 	} // End meta_box_setup()
 
 	/**
@@ -257,7 +257,7 @@ class Starter_Plugin_Post_Type {
 
 		$html = '';
 
-		$html .= '<input type="hidden" name="starter-plugin_' . $this->post_type . '_noonce" id="starter-plugin_' . $this->post_type . '_noonce" value="' . wp_create_nonce( plugin_basename( dirname( Starter_Plugin()->plugin_path ) ) ) . '" />';
+		$html .= '<input type="hidden" name="pp-customizer-customizer_' . $this->post_type . '_noonce" id="pp-customizer-customizer_' . $this->post_type . '_noonce" value="' . wp_create_nonce( plugin_basename( dirname( PP_Customizer_Customizer()->plugin_path ) ) ) . '" />';
 
 		if ( 0 < count( $field_data ) ) {
 			$html .= '<table class="form-table">' . "\n";
@@ -293,7 +293,7 @@ class Starter_Plugin_Post_Type {
 		global $post, $messages;
 
 		// Verify
-		if ( ( get_post_type() != $this->post_type ) || ! wp_verify_nonce( $_POST['starter-plugin_' . $this->post_type . '_noonce'], plugin_basename( dirname( Starter_Plugin()->plugin_path ) ) ) ) {
+		if ( ( get_post_type() != $this->post_type ) || ! wp_verify_nonce( $_POST['pp-customizer-customizer_' . $this->post_type . '_noonce'], plugin_basename( dirname( PP_Customizer_Customizer()->plugin_path ) ) ) ) {
 			return $post_id;
 		}
 
@@ -339,7 +339,7 @@ class Starter_Plugin_Post_Type {
 	 */
 	public function enter_title_here ( $title ) {
 		if ( get_post_type() == $this->post_type ) {
-			$title = __( 'Enter the thing title here', 'starter-plugin' );
+			$title = __( 'Enter the thing title here', 'pp-customizer-customizer' );
 		}
 		return $title;
 	} // End enter_title_here()
@@ -353,14 +353,14 @@ class Starter_Plugin_Post_Type {
 		$fields = array();
 
 		$fields['url'] = array(
-		    'name' => __( 'URL', 'starter-plugin' ),
-		    'description' => __( 'Enter a URL that applies to this thing (for example: http://domain.com/).', 'starter-plugin' ),
+		    'name' => __( 'URL', 'pp-customizer-customizer' ),
+		    'description' => __( 'Enter a URL that applies to this thing (for example: http://domain.com/).', 'pp-customizer-customizer' ),
 		    'type' => 'url',
 		    'default' => '',
 		    'section' => 'info'
 		);
 
-		return apply_filters( 'starter-plugin_custom_fields_settings', $fields );
+		return apply_filters( 'pp-customizer-customizer_custom_fields_settings', $fields );
 	} // End get_custom_fields_settings()
 
 	/**
