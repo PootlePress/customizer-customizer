@@ -278,10 +278,11 @@ final class PP_Customizer_Customizer_Settings {
 					$customizeManager->setup_theme();
 
 				} else {
-					$customizeManager = new WP_Customize_Manager;
-
-					// this is to initialize some data fields using this method
-					$customizeManager->setup_theme();
+//					$customizeManager = new WP_Customize_Manager;
+//
+//					// this is to initialize some data fields using this method
+//					$customizeManager->setup_theme();
+					return array();
 				}
 
 				remove_action('customize_register', array(PP_Customizer_Customizer_Admin::instance(), 'customize_register'), 100);
