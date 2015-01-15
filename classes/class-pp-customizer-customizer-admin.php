@@ -53,7 +53,14 @@ final class PP_Customizer_Customizer_Admin {
 		$settings = PP_Customizer_Customizer()->settings->get_settings();
 		foreach ($settings as $sectionID => $isEnabled) {
 			if ($isEnabled == 'false') {
-				$customizeManager->remove_section($sectionID);
+				$panel = $customizeManager->get_panel($sectionID);
+				if (isset($panel) && $panel != null) {
+					// is a panel, remove it
+					$customizeManager->remove_panel($sectionID);
+				} else {
+					$customizeManager->remove_section($sectionID);
+				}
+
 			}
 		}
 	}
@@ -80,7 +87,7 @@ final class PP_Customizer_Customizer_Admin {
 	 * @return  void
 	 */
 	public function register_settings_screen () {
-		$this->_hook = add_submenu_page( 'options-general.php', __( 'Customizer Customizer Settings', 'pp-customizer-customizer' ), __( 'Customizer Customizer', 'pp-customizer-customizer' ), 'manage_options', 'pp-customizer-customizer', array( $this, 'settings_screen' ) );
+		$this->_hook = add_submenu_page( 'options-general.php', __( 'Customizer Customizer Settings', 'pp-customizer-customizer' ), __( 'Customizer', 'pp-customizer-customizer' ), 'manage_options', 'pp-customizer-customizer', array( $this, 'settings_screen' ) );
 	} // End register_settings_screen()
 
 	/**

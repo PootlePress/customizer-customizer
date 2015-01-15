@@ -289,7 +289,21 @@ final class PP_Customizer_Customizer_Settings {
 				do_action('customize_register', $customizeManager);
 				add_action('customize_register', array(PP_Customizer_Customizer_Admin::instance(), 'customize_register'), 100);
 
+				foreach ($customizeManager->panels() as $key => $panel) {
+					$settings_fields[$key] = array(
+						'name' => $panel->title,
+						'type' => 'checkbox',
+						'default' => 'true',
+						'section' => 'pp-cc-fields',
+						'description' => 'Enabled'
+					);
+				}
+
 				foreach ($customizeManager->sections() as $key => $section) {
+					if (isset($section->panel) && $section->panel != null) {
+						continue;
+					}
+
 					$settings_fields[$key] = array(
 						'name' => $section->title,
 						'type' => 'checkbox',
