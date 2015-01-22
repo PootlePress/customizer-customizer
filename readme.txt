@@ -43,7 +43,7 @@ We encourage everyone to contribute their ideas, thoughts and code snippets. Thi
 
 == Screenshots ==
 
-1. This screen shot description corresponds to /customizer-customizer-screen1.png
+1. This screen shot description corresponds to customizer-customizer-screen1.png
 
 == Upgrade Notice ==
 
