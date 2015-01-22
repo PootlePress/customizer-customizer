@@ -1,7 +1,7 @@
 === Hide Customizer Options ===
 
 Contributors: nickburne
-Plugin Name: Your Plugin Name Will Go Here
+Plugin Name: Hide Customizer Options
 Plugin URI:
 Tags: customizer options, manage customizer, customizer sections, hide
 Author URI:
