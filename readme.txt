@@ -1,5 +1,11 @@
 === Hide Customizer Options ===
-Contributors:
+
+Contributors: nickburne
+Plugin Name: Your Plugin Name Will Go Here
+Plugin URI:
+Tags: customizer options, manage customizer, customizer sections, hide
+Author URI:
+Author: PootlePress
 Donate link:
 Tags:
 Requires at least: 4.0.0
@@ -18,7 +24,7 @@ Looking for a helping hand? [View plugin documentation](http://domain.com/).
 
 == Usage ==
 
-In your WordPress dashboard simply go to Settings > Customizer and there you will find each option section from the WordPress Customizer list with a checkbox to hide the section in the WordPress Customizer. Select the sections you want to hide and click Save. Now go to the WordPress Customizer and you will notice the sections you have just hidden are not there. 
+In your WordPress dashboard simply go to Settings > Customizer and there you will find each option section from the WordPress Customizer listed with a checkbox to hide the section in the WordPress Customizer. Select the sections you want to hide and click Save. Now go to the WordPress Customizer and you will notice the sections you have just hidden are not there. 
 
 == Installation ==
 
