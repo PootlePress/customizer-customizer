@@ -39,7 +39,7 @@ Installing "Hide Customizer Options" can be done either by searching for "Hide C
 
 = How do I contribute? =
 
-We encourage everyone to contribute their ideas, thoughts and code snippets. This can be done by forking the [repository over at GitHub](http://github.com/mattyza/pp-customizer-customizer/).
+We encourage everyone to contribute their ideas, thoughts and code snippets. This can be done by forking the [repository over at GitHub](https://github.com/PootlePress/hide-customizer-options/).
 
 == Screenshots ==
 
