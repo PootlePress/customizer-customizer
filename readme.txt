@@ -1,4 +1,4 @@
-=== Starter Plugin ===
+=== Hide Customizer Options ===
 Contributors:
 Donate link:
 Tags:
@@ -12,22 +12,22 @@ Hey there! I'm your new starter plugin.
 
 == Description ==
 
-Hey there! I'm your new starter plugin.
+This plugin allows you to hide option sections from the WordPress Customizer. As more and more plugins are using the WordPress Customizer you will find this tool useful to turn off and on option sections that you do not use very often.
 
 Looking for a helping hand? [View plugin documentation](http://domain.com/).
 
 == Usage ==
 
-Place some text here, explaining how to use this plugin. Keep it clear and easy to read (short sentences).
+In your WordPress dashboard simply go to Settings > Customizer and there you will find each option section from the WordPress Customizer list with a checkbox to hide the section in the WordPress Customizer. Select the sections you want to hide and click Save. Now go to the WordPress Customizer and you will notice the sections you have just hidden are not there. 
 
 == Installation ==
 
-Installing "Starter Plugin" can be done either by searching for "Starter Plugin" via the "Plugins > Add New" screen in your WordPress dashboard, or by using the following steps:
+Installing "Hide Customizer Options" can be done either by searching for "Hide Customizer Options" via the "Plugins > Add New" screen in your WordPress dashboard, or by using the following steps:
 
 1. Download the plugin via WordPress.org.
-1. Upload the ZIP file through the "Plugins > Add New > Upload" screen in your WordPress dashboard.
-1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Visit the settings screen and configure, as desired.
+2. Upload the ZIP file through the "Plugins > Add New > Upload" screen in your WordPress dashboard.
+3. Activate the plugin through the 'Plugins' menu in WordPress
+4. Visit the settings screen and configure, as desired.
 
 == Frequently Asked Questions ==
 
