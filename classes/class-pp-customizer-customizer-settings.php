@@ -289,14 +289,9 @@ final class PP_Customizer_Customizer_Settings {
 				do_action('customize_register', $customizeManager);
 				add_action('customize_register', array(PP_Customizer_Customizer_Admin::instance(), 'customize_register'), 100);
 
+				$temp = array();
 				foreach ($customizeManager->panels() as $key => $panel) {
-					$settings_fields[$key] = array(
-						'name' => $panel->title,
-						'type' => 'checkbox',
-						'default' => 'true',
-						'section' => 'pp-cc-fields',
-						'description' => 'Enabled'
-					);
+					$temp[$key] = $panel;
 				}
 
 				foreach ($customizeManager->sections() as $key => $section) {
@@ -304,14 +299,23 @@ final class PP_Customizer_Customizer_Settings {
 						continue;
 					}
 
+					$temp[$key] = $section;
+				}
+
+				uasort($temp, function ($a, $b) {
+					return $a->priority - $b->priority;
+				});
+
+				foreach ($temp as $key => $value) {
 					$settings_fields[$key] = array(
-						'name' => $section->title,
+						'name' => $value->title,
 						'type' => 'checkbox',
 						'default' => 'true',
 						'section' => 'pp-cc-fields',
 						'description' => 'Enabled'
 					);
 				}
+
 				break;
 			case 'standard-fields':
 
