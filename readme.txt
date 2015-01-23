@@ -44,11 +44,11 @@ We encourage everyone to contribute their ideas, thoughts and code snippets. Thi
 == Upgrade Notice ==
 
 = 1.0.0 =
-* XXXX-XX-XX
+* 2015-23-01
 * Initial release. Woo!
 
 == Changelog ==
 
 = 1.0.0 =
-* XXXX-XX-XX
+* 2015-23-01
 * Initial release. Woo!
