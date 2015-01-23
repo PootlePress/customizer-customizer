@@ -1,7 +1,7 @@
-=== Hide Customizer Options ===
+=== Hide WP Customizer Options ===
 
 Contributors: nickburne
-Plugin Name: Hide Customizer Options
+Plugin Name: Hide WP Customizer Options
 Plugin URI:
 Tags: customizer options, manage customizer, customizer sections, hide
 Author URI:
@@ -13,8 +13,6 @@ Tested up to: 4.0.0
 Stable tag: 1.0.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
-
-Hey there! I'm your new starter plugin.
 
 == Description ==
 
