@@ -18,8 +18,6 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 This plugin allows you to hide option sections from the WordPress Customizer. As more and more plugins are using the WordPress Customizer you will find this tool useful to turn off and on option sections that you do not use very often.
 
-Looking for a helping hand? [View plugin documentation](http://domain.com/).
-
 == Usage ==
 
 In your WordPress dashboard simply go to Settings > Customizer and there you will find each option section from the WordPress Customizer listed with a checkbox to hide the section in the WordPress Customizer. Select the sections you want to hide and click Save. Now go to the WordPress Customizer and you will notice the sections you have just hidden are not there. 
@@ -37,7 +35,7 @@ Installing "Hide Customizer Options" can be done either by searching for "Hide C
 
 = How do I contribute? =
 
-We encourage everyone to contribute their ideas, thoughts and code snippets. This can be done by forking the [repository over at GitHub](https://github.com/PootlePress/hide-customizer-options/).
+We encourage everyone to contribute their ideas, thoughts and code snippets. This can be done by forking the [repository over at GitHub](https://github.com/PootlePress/hide-wp-customizer-options/).
 
 == Screenshots ==
 
