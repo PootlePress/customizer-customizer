@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Customizer Customizer
+ * Plugin Name: Hide WP Customizer options
  * Description: A plugin to customize the WP Customizer
  * Version: 1.0.0
  * Author: PootlePress
