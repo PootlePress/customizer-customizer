@@ -17,6 +17,7 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 == Description ==
 
 This plugin allows you to hide option sections from the WordPress Customizer. As more and more plugins are using the WordPress Customizer you will find this tool useful to turn off and on option sections that you do not use very often.
+[vimeo http://vimeo.com/117739595]
 
 == Usage ==
 
