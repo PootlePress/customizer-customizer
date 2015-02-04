@@ -302,9 +302,12 @@ final class PP_Customizer_Customizer_Settings {
 					$temp[$key] = $section;
 				}
 
-				uasort($temp, function ($a, $b) {
+				// anonymous function is only available since PHP 5.3
+				function priorityCmp($a, $b) {
 					return $a->priority - $b->priority;
-				});
+				}
+
+				uasort($temp, 'priorityCmp');
 
 				foreach ($temp as $key => $value) {
 					$settings_fields[$key] = array(
