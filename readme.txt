@@ -1,6 +1,6 @@
 === Hide WP Customizer Options ===
 
-Contributors: nickburne
+Contributors: nickburne, pootlepress
 Plugin Name: Hide WP Customizer Options
 Plugin URI:
 Tags: customizer options, manage customizer, customizer sections, hide
